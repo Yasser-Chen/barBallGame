@@ -1,0 +1,27 @@
+
+  .flame{
+    position:absolute;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+    transform:rotate(-45deg) scale(1.5,1.5);
+  }
+  
+  .red{
+    left:4px;
+    opacity: .8;
+    width: 5px;
+    height: 5px;
+    background:OrangeRed;
+    box-shadow: 0px 0px 5px 4px OrangeRed;
+  }
+  
+  
+  @keyframes flicker{
+    0%   {transform: rotate(0deg);}
+    20%  {transform: rotate(360deg);}
+    40%  {transform: rotate(0deg);}
+    60%  {transform: rotate(360deg) scaleY(1.04);}
+    80%  {transform: rotate(0deg) scaleY(0.92);}
+    100% {transform: rotate(360deg);}
+  }

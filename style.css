@@ -1,0 +1,64 @@
+@keyframes glow {
+    from {
+        box-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 3px #e60073, 0 0 4px #e60073, 0 0 5px #e60073, 0 0 6px #e60073, 0 0 7px #e60073;
+    }
+    to {
+        box-shadow: 0 0 2px #fff, 0 0 3px #ff4da6, 0 0 4px #ff4da6, 0 0 5px #ff4da6, 0 0 6px #ff4da6, 0 0 7px #ff4da6, 0 0 8px #ff4da6;
+    }
+}
+
+body{
+    background-color: black;
+}
+
+.game-box{
+    height  : 100vh ;
+    width   : 100% ;
+}
+#game{
+    position: relative;
+    padding: 10px 10px 10px 10px;
+    display: inline !important;
+    width  : 400px;
+    height : 400px;
+    background-color: rgb(28, 29, 29) ;
+    border: white dotted 1px;
+}
+
+#ball{
+    z-index: 199;
+    display: inline ;
+    position: absolute;
+    border-radius: 10px ;
+    background-color: rgb(255, 242, 0) ;
+}
+#bar{    
+    display: inline ;
+    position: absolute;
+    border-radius: 10px ;
+    height: 10px ;
+    background-color: rgb(234, 234, 234) ;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+.info-box{
+    display: inline ;
+    position: absolute;
+    top: -30px ;
+}
+.block{
+    display: inline ;
+    position: absolute;
+    background-image: linear-gradient(to right top, #d2d2d2, #a8a8a8, #808080, #5a5a5a, #373737);
+}
+
+
+
+
+
+.strong{
+    box-sizing: border-box;
+    background-image: linear-gradient(to right top, #370510, #571217, #762518, #923c13, #aa5700);
+}
+
