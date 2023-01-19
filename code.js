@@ -45,6 +45,10 @@ Block.prototype.wasTouched= function (indexToDelete) {
   if(this.hp==0){
     this.elem.remove();
     delete currentBlocks[indexToDelete];
+    if(Object.keys(currentBlocks).length==0){
+      lvl++;
+      generateLevel();
+    }
   }
 }
 // init
@@ -59,15 +63,23 @@ var ballX = parseInt(resolusion/2) ,
     currentBlocks = {} ,
     ballY = 10  ,
     barX  = 10  ,
+    lvl   = 1  ,
+    stageState  = 'waiting'  ,
     direction  = 0 ;
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
-function generateLevel(lvl=1){
- 
+function generateLevel(){
+  ballMoveTypeX = ()=>{},
+  ballMoveTypeY = ()=>{};
+
+  stageState = 'waiting';
   $('.block').remove();
   cntBlocks = 0 ;
   currentBlocks = {} ;
 
-  if(lvl==1){
+  if(lvl==10){
     for (let i = 0; i < (resolusion/foodWidth) ; i++) {
       for (let j = 0; j < ((resolusion/2) / foodHeight) ; j++) {
         currentBlocks [cntBlocks] = new Block(i,j,2);
@@ -75,10 +87,29 @@ function generateLevel(lvl=1){
       }
     }
   }
+  
+  
+  var created = {};
+  for (let i = 0; i < randomIntFromInterval(1,((resolusion/2) / foodHeight)) + lvl ; i++) {
+    var rndX = randomIntFromInterval(1,(resolusion/foodWidth)-1) ;
+    var rndY = randomIntFromInterval(1,((resolusion/2) / foodHeight)) ;
+    if(!(`${rndX}_${rndY}`in created)){
+      created[`${rndX}_${rndY}`] = '+';
+      currentBlocks [cntBlocks] = new Block(rndX,rndY,2);
+      cntBlocks++;
+    }
+  }
+
 
 }
 
-generateLevel(1);
+generateLevel();
+
+
+var ballMoveTypeX = ()=>{},
+    ballMoveTypeY = ()=>{};
+
+
 
 var keyPressed = false;
 
@@ -90,6 +121,15 @@ $(document).on('keydown', function(e) {
     case 'ArrowLeft':
         direction = 3 ;
         break;
+  }
+  if(e.key===" " && stageState=="waiting"){
+    ballMoveTypeX = ()=>{
+      ballX ++;
+    },
+    ballMoveTypeY = ()=>{
+      ballY --;
+    };
+    stageState = 'playing';
   }
   if(e.key=='ArrowRight'||e.key=='ArrowLeft'){
     var key;
@@ -112,14 +152,6 @@ $(document).on('keydown', function(e) {
     });
   }
 });
-
-var ballMoveTypeX = ()=>{
-      ballX ++;
-    },
-    ballMoveTypeY = ()=>{
-      ballY --;
-    };
-
 
 function draw(){
   
@@ -208,6 +240,7 @@ const frames = setInterval(() => {
     }else{
       ball.fadeOut(210);
       setTimeout(()=>{
+        alert("Game Over");
         window.location.reload();
       },1000);
     }
@@ -228,6 +261,11 @@ const frames = setInterval(() => {
         left: barX ,
       },'slow');
     }
+  }
+  
+  if(stageState=="waiting"){
+      ballX = barX + parseInt(barSize/2) - ballSize/2 ;
+      ballY = resolusion - (ballSize + barOffside )   ;
   }
 
 
